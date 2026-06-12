@@ -1,15 +1,12 @@
-import express from "express";
+import 'dotenv/config';
+import app from './app.js';
+import { testConnection } from './config/db.js';
 
-const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-app.get("/", (_, res) => {
-  console.log("-> Quelqu'un a visité la racine de l'API !");
-  res.send("API running");
-});
-
-// Ajout d'un console.log au démarrage
-app.listen(PORT, () => {
-  console.log(`🚀 Serveur Express démarré avec succès !`);
-  console.log(`🌍 URL locale : http://localhost:${PORT}`);
-});
+testConnection().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Serveur SGRP démarré sur le port ${PORT}`);
+    console.log(`Environnement : ${process.env.NODE_ENV}`);
+  });
+})
