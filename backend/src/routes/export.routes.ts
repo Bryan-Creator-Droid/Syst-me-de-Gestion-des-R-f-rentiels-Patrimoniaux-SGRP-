@@ -6,62 +6,38 @@ const router = Router();
 
 /**
  * @swagger
- * tags:
- *   name: Export
- *   description: Export CSV et PDF des référentiels (Admin uniquement)
- *
- * /api/v1/export/{referentiel}/csv:
+ * /api/v1/export/{typeFiche}/csv:
  *   get:
  *     tags: [Export]
- *     summary: Export CSV d'un référentiel
+ *     summary: Export CSV d'un type de fiche
  *     parameters:
  *       - in: path
- *         name: referentiel
+ *         name: typeFiche
  *         required: true
  *         schema:
  *           type: string
- *           enum: [sites, objets, pratiques, artisans, evenements]
+ *           enum: [Site, Objet, Pratique, Artisan, Événement, Tous]
  *     responses:
  *       200:
  *         description: Fichier CSV téléchargeable
- *         content:
- *           text/csv:
- *             schema: { type: string }
  *
- * /api/v1/export/{referentiel}/pdf:
+ * /api/v1/export/{typeFiche}/pdf:
  *   get:
  *     tags: [Export]
- *     summary: Export PDF d'un référentiel
+ *     summary: Export PDF d'un type de fiche
  *     parameters:
  *       - in: path
- *         name: referentiel
+ *         name: typeFiche
  *         required: true
  *         schema:
  *           type: string
- *           enum: [sites, objets, pratiques, artisans, evenements]
+ *           enum: [Site, Objet, Pratique, Artisan, Événement, Tous]
  *     responses:
  *       200:
  *         description: Fichier PDF téléchargeable
- *         content:
- *           application/pdf:
- *             schema:
- *               type: string
- *               format: binary
  */
 
-// Export réservé aux admins uniquement
-router.get(
-  '/:referentiel/csv',
-  authenticate,
-  authorize('Administrateur', 'Super_Admin'),
-  exportCSV
-);
-
-router.get(
-  '/:referentiel/pdf',
-  authenticate,
-  authorize('Administrateur', 'Super_Admin'),
-  exportPDF
-);
+router.get('/:typeFiche/csv', authenticate, authorize('Admin'), exportCSV);
+router.get('/:typeFiche/pdf', authenticate, authorize('Admin'), exportPDF);
 
 export default router;
