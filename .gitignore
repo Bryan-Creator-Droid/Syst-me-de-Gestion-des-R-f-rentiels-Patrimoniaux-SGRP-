@@ -1,4 +1,16 @@
+# Dépendances
 node_modules/
-dist/
-.env
-.vite
+
+# Variables sensibles
+backend/.env
+frontend/.env
+
+# Uploads
+backend/src/uploads/
+
+# Builds
+backend/dist/
+frontend/dist/
+
+# Logs
+*.log
